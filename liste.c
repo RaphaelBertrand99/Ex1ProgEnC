@@ -51,12 +51,13 @@ node* insert(
     int index,
     float const data)
 {
+    if(index>length(list)) return list;
     // La liste est peut-être un liste vide, ce sera alors le tout premier noeud.
     if(list == NULL)
     {
         list = malloc(sizeof(node));
         list->data = data;
-        list->next = list;
+        list->next = NULL;
     }
     // Si on insère au tout début de la liste, 'list' devient le deuxième noeud.
     else if(index == 0)
@@ -64,16 +65,19 @@ node* insert(
         node *first = malloc(sizeof(node));
         first->data = data;
         first->next = list;
+        list = first;
     }
     // Sinon, il faut trouver le point d'insertion et y insérer un 
     // nouveau noeud. Attention à bien «enchaîner» les noeuds existants avant et après !
     else
     {
-        node *insertion_point = at(list, index);
-
+        node *insertion_point = at(list, index-1);
         node *created = malloc(sizeof(node));
         created->data = data;
+        created->next = NULL;
+        created->next = at(list,index);
         insertion_point->next = created;
+        
     }
 
     return list;
@@ -87,7 +91,7 @@ node* erase(
     int index)
 {
     // Si c'est une liste vide, il n'y a rien à faire.
-    if(list)
+    if((list == NULL)||(index>length(list)))
     {
     }
     // S'il faut effacer le tout premier noeud, on fait avancer 'list' vers 
@@ -102,7 +106,7 @@ node* erase(
     // du noeud trouvé. Attention à bien «rabouter» les noeuds avant et après !
     else
     {
-        node *erasure_point = at(list, index); // Off-by-one error?
+        node *erasure_point = at(list, index-1); // Off-by-one error?
 
         node *erased = erasure_point->next;
         erasure_point->next = erased->next;
@@ -122,8 +126,14 @@ node* split(
     node** list,
     int const index)
 {
-    node *split_point = at(*list, index);
-    node *second_list = split_point->next;
+    if(index == 0){
+        return *list;
+    }
+    if(index>length(*list)){
+        return NULL;
+    }
+    node *second_list = at(*list,index);
+    node *split_point = at(*list, index-1);
     split_point->next = NULL;
 
     return second_list;
@@ -139,7 +149,7 @@ void clear(
     //  3. on avance le pointeur 'list' au noeud suivant.
     for(node *p; list != NULL; list = p)
     {
-        p = list;
+        p = list->next;
         free(list);
     }
 }
