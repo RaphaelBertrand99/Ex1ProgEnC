@@ -26,8 +26,8 @@ node* at(
 {
     // On fait avancer le pointeur 'list' autant de fois que 'index' nous 
     // l'indique et tant que l'on a pas atteint la fin de la liste.
-    for(; index != 0 && (list = list->next); --index)
-    {}
+    for(; index != 0; --index)
+    {if(list != NULL) list = list->next;}
 
     // On renvoie l'adresse du noeud atteint.
     return list;
@@ -40,7 +40,7 @@ void set(
     int index,
     float const data)
 {
-    at(list, index)->data = data;
+    if(at(list,index)!=NULL) at(list, index)->data = data;
 }
 
 // Insère juste après le 'index'ième noeud un nouveau noeud avec la valeur donnée.
