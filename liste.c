@@ -11,7 +11,9 @@ int length(
     // on a fait avancer le pointeur.
     int steps;
     for(steps = 0; list != NULL; list = list->next)
-    {}
+    {
+        steps++;
+    }
 
     return steps;
 }
