@@ -15,10 +15,4 @@ jobs:
     - uses: actions/checkout@v2
     - name: test
       run: gcc main.c liste.c
-  test:
-    runs-on: [ubuntu-latest;windows-latest;macos-latest]
-    
-    required: build
-    
-    steps:
     - run: ./a.out
