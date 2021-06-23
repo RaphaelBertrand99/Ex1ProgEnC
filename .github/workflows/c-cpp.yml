@@ -15,4 +15,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build
       run: gcc main.c liste.c
-
+    - name: Test
+      run: ./a.out
