@@ -13,6 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: test
+    - name: Build
       run: gcc main.c liste.c
-    - run: ./a.out
+    - name: Test
+      run: ./a.out
